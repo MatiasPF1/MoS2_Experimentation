@@ -1,0 +1,125 @@
+/*                                                 Navbar Work Style                                                                 */
+
+/* NAVBAR BACKGROUND */
+.navbar-custom {
+    background-color: #fdfdfd !important;
+}
+
+/* NAVBAR TITLE */
+.navbar-title {
+    font-weight: 600;
+    font-size: 22px;
+    color: #2b2d42;
+}
+
+
+
+/*                                               Buttons For Specs                                                                   */
+
+/* LEFT PANEL*/
+.left-panel {
+    width: 50%;
+    padding: 20px 120px;
+}
+
+/*  PARAMETER BUTTONS  */
+.param-btn-container {
+    display: flex;
+    padding: 12px;
+    border-radius: 22px;
+    gap: 16px;
+}
+
+.param-btn {
+    flex: 1;
+    background-color: #dee3e7;
+    border: none;
+    padding: 30px 35px;
+    margin-bottom: -30px;
+    border-radius: 18px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #869fb8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* How buttons active look like */
+.active-param-btn {
+    background-color: white;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+/* icons */
+.param-btn i {
+    font-size: 14px;
+}
+
+
+/*                                                Parameters Panel Work                                                           */
+/* Material Panel container */
+.material-panel {
+    background: rgb(221, 224, 226);
+    border-radius: 12px;
+    padding: 20px 24px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    margin-top: 20px;
+}
+
+/*Material Panelr Container 2*/
+.material-panel2 {
+    background: rgb(221, 224, 226);
+    border-radius: 12px;
+    padding: 20px 24px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    margin-top: 20px;
+}
+
+/* Titles */
+.section-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #2b2d42;
+    margin-bottom: 6px;
+}
+
+.section-subtitle {
+    color: #6c757d;
+    margin-bottom: 20px;
+}
+
+/* Grid layout */
+.form-grid {
+    display: flex;
+    gap: 28px;
+}
+
+.form-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* Inputs */
+.input-field {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #fff9f9;
+    background-color: #fff9f9;
+}
+
+
+
+/*                                              Styles For Main Section                                                               */
+/*For Container that has the box with all the data*/
+.section-container {
+    display: flex;
+    justify-content: flex-start;
+    padding-top: 0px;
+    padding-left: 100px;
+    padding-right: 20px;
+}
