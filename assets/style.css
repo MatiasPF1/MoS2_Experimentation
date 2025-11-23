@@ -1,248 +1,277 @@
+/* =======================================================================
+   GLOBAL LAYOUT + BACKGROUND
+   ======================================================================= */
 
-/*                                                 Navbar Work Style                                                                 */
-
-/* NAVBAR BACKGROUND */
-.navbar-custom {
-    background-color: #fdfdfd !important;
+body {
+    margin: 0;
+    background: linear-gradient(180deg, #f7f9fc 0%, #eef1f7 100%);
+    font-family: 'Inter', sans-serif;
+    color: #2b2d42;
 }
 
-/* NAVBAR TITLE */
+.section-container {
+    display: flex;
+    justify-content: flex-start;
+    gap: 50px;
+    padding: 40px 80px;
+}
+
+.tab-with-panel {
+    flex: 1;
+    max-width: 900px;
+}
+
+
+
+/* =======================================================================
+   NAVBAR
+   ======================================================================= */
+
+.navbar-custom {
+    background: #ffffff !important;
+    padding: 18px 40px;
+    border-bottom: 1px solid #e3e6ec;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+
 .navbar-title {
-    font-weight: 600;
     font-size: 22px;
+    font-weight: 700;
     color: #2b2d42;
 }
 
 
 
-/*                                          Buttons To Select Parameters or Settings                                           */
+/* =======================================================================
+   PARAMETER TOGGLE BUTTONS (FATTER VERSION)
+   ======================================================================= */
 
-/* LEFT PANEL*/
-.left-panel {
-    width: 50%;
-    padding: 20px 120px;
-}
-
-/*  PARAMETER BUTTONS  */
 .param-btn-container {
     display: flex;
-    padding: 12px;
-    border-radius: 22px;
-    gap: 16px;
-    margin-left: 120px;
+    gap: 14px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .param-btn {
     flex: 1;
-    background-color: #dee3e7;
-    border: none;
-    padding: 30px 35px;
-    margin-bottom: -30px;
-    border-radius: 18px;
-    font-size: 14px;
-    font-weight: 500;
-    color: #869fb8;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
-
-/* How buttons active look like */
-.active-param-btn {
-    background-color: white;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-}
-
-/* icons */
-.param-btn i {
-    font-size: 14px;
-}
-
-
-/*                                      Parameters For Generation Panel Work                                                           */
-/* Material Panel container */
-.material-panel {
-    background: rgb(216, 227, 235);
-    border-radius: 12px;
-    padding: 20px 24px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-    margin-top: 20px;
-}
-
-/*Material Panelr Container 2*/
-.material-panel2 {
-    background: rgb(216, 227, 235);
-    border-radius: 12px;
-    padding: 20px 24px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-    margin-top: 20px;
-}
-
-
-/* Titles */
-.section-title {
-    font-size: 20px;
+    padding: 22px 28px; /* Fat buttons */
+    background: #e7ebf0;
+    color: #7a8ba0;
+    border-radius: 14px;
+    font-size: 17px;
     font-weight: 600;
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-align: center;
+    transition: 0.25s ease;
+}
+
+.param-btn:hover {
+    background: #d9dde3;
+}
+
+.active-param-btn {
+    background: #ffffff;
+    color: #5a65ff;
+    border: 2px solid #6576ff;
+    box-shadow: 0 4px 12px rgba(101, 118, 255, 0.25);
+}
+
+
+
+/* =======================================================================
+   PANEL CARDS (MATERIAL, DEFECTS, MICROSCOPE, ETC)
+   ======================================================================= */
+
+.material-panel,
+.material-panel2,
+.microscope-panel,
+.aberration-panel,
+.ADF_Panel,
+.Gausian_Panel {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 30px 32px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.05);
+    margin-top: 30px;
+    position: relative;
+}
+
+/* Top Accent Bar */
+.material-panel::before,
+.material-panel2::before,
+.microscope-panel::before,
+.aberration-panel::before,
+.ADF_Panel::before,
+.Gausian_Panel::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 5px;
+    width: 100%;
+    border-radius: 16px 16px 0 0;
+    background: linear-gradient(90deg, #6d67e4, #8f77ff);
+}
+
+/* No hover motions */
+.material-panel:hover,
+.material-panel2:hover,
+.microscope-panel:hover,
+.aberration-panel:hover,
+.ADF_Panel:hover,
+.Gausian_Panel:hover {
+    transform: none;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.05);
+}
+
+
+
+/* =======================================================================
+   TEXT STYLES
+   ======================================================================= */
+
+.section-title {
+    font-size: 22px;
+    font-weight: 700;
     color: #2b2d42;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
 }
 
 .section-subtitle {
+    font-size: 14px;
     color: #6c757d;
     margin-bottom: 20px;
 }
 
-/* Grid layout */
+
+
+/* =======================================================================
+   FORM GRID
+   ======================================================================= */
+
 .form-grid {
     display: flex;
-    gap: 28px;
+    gap: 40px;
 }
 
 .form-col {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 20px;
 }
 
-/* Inputs */
+label {
+    font-weight: 600;
+    font-size: 14px;
+    color: #4a5568;
+}
+
+
+
+/* =======================================================================
+   INPUT FIELDS
+   ======================================================================= */
+
 .input-field {
     width: 100%;
-    padding: 8px 10px;
-    border-radius: 6px;
-    border: 1px solid #fff9f9;
-    background-color: #ffffff;
+    padding: 12px 14px;
+    font-size: 14px;
+    border-radius: 10px;
+    border: 1px solid #d0d5dd;
+    background: #fcfcfc;
+    transition: 0.2s ease;
+}
+
+.input-field:hover {
+    border-color: #b9c0cf;
+}
+
+.input-field:focus {
+    border-color: #6d67e4;
+    box-shadow: 0 0 0 3px rgba(109, 103, 228, 0.25);
+    outline: none;
 }
 
 
-/*                                              Right Panel For Generation  Work                                                    */
 
-/* Container for right panels */
+/* =======================================================================
+   RIGHT PANEL (GENERATION SETTINGS)
+   ======================================================================= */
+
 .right-panel-container {
-    width: 400px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 20px;
-    margin-top: 140px;
+    width: 380px;
+    margin-top: 150px;
 }
 
-/* Base right panel styling */
 .right-panel {
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 16px;
-    padding: 24px;
-    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+    backdrop-filter: blur(10px);
+    border: 1px solid #e8e8f3;
 }
 
-/* Panel titles */
 .right-panel-title {
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 22px;
+    font-weight: 700;
     color: #2b2d42;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
 }
 
 .right-panel-subtitle {
-    color: #9ca3af;
     font-size: 14px;
+    color: #949fb2;
     margin-bottom: 20px;
 }
 
-/* Generation Panel specific */
-.generation-panel {
-    display: flex;
-    flex-direction: column;
-}
 
-.batch-label {
-    color: #8b5cf6;
-    font-weight: 500;
-    font-size: 14px;
-    margin-bottom: 8px;
-}
 
-.batch-dropdown {
-    margin-bottom: 20px;
-}
+/* =======================================================================
+   GENERATE BUTTON
+   ======================================================================= */
 
-/* Generate Button */
 .generate-btn {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(120deg, #6a5cff, #9277ff);
     color: white;
     border: none;
-    border-radius: 12px;
-    padding: 16px 24px;
-    font-size: 16px;
-    font-weight: 500;
+    border-radius: 14px;
+    padding: 16px 22px;
+    font-size: 17px;
+    font-weight: 600;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    margin-top: 10px;
+    transition: 0.25s ease;
+    width: 100%;
+    box-shadow: 0 6px 20px rgba(110, 92, 255, 0.35);
 }
 
 .generate-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgba(110, 92, 255, 0.45);
+}
+
+.generate-btn:active {
+    transform: translateY(0px);
+    box-shadow: 0 4px 12px rgba(110, 92, 255, 0.30);
 }
 
 
-/*                                                  Microscope Setting Panels Work                                                  */
 
-/* Microscope Panel — same design as material-panel */
-.microscope-panel {
-    background: rgb(216, 227, 235);
-    border-radius: 12px;
-    padding: 20px 24px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-    margin-top: 20px;
+/* =======================================================================
+   DROPDOWNS
+   ======================================================================= */
+
+.batch-dropdown {
+    border-radius: 10px !important;
+    padding: 6px !important;
 }
 
-/* Aberration Panel — same design */
-.aberration-panel {
-    background: rgb(216, 227, 235);
-    border-radius: 12px;
-    padding: 20px 24px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-    margin-top: 20px;
-}
-
-/*ADF Panel*/
-.ADF_Panel{
-    background: rgb(216, 227, 235);
-    border-radius: 12px;
-    padding: 20px 24px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-    margin-top: 20px;
-}
-
-/*Gausian Panel*/
-.Gausian_Panel{
-    background: rgb(216, 227, 235);
-    border-radius: 12px;
-    padding: 20px 24px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-    margin-top: 20px;
-}
-
-/*                                                  Main Section Work                                                               */
-/*For Container that has the box with all the data*/
-.section-container {
-    display: flex;
-    justify-content: flex-start;
-    padding-top: 0px;
-    padding-left: 100px;
-    padding-right: 20px;
-}
-
-.tab-with-panel {
-    flex: 1;
-    max-width: 800px;
+.batch-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #6d67e4;
 }
