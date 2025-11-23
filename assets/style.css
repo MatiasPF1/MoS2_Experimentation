@@ -194,7 +194,28 @@
 }
 
 
-/*                                                  Main Section Work                                                                   */
+/*                                                  Microscope Setting Panels Work                                                  */
+
+/* Microscope Panel — same design as material-panel */
+.microscope-panel {
+    background: rgb(216, 227, 235);
+    border-radius: 12px;
+    padding: 20px 24px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    margin-top: 20px;
+}
+
+/* Aberration Panel — same design */
+.aberration-panel {
+    background: rgb(216, 227, 235);
+    border-radius: 12px;
+    padding: 20px 24px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    margin-top: 20px;
+}
+
+
+/*                                                  Main Section Work                                                               */
 /*For Container that has the box with all the data*/
 .section-container {
     display: flex;

@@ -2,12 +2,18 @@ from dash import Dash, html, Input, Output
 import dash_bootstrap_components as dbc
 import dash
 
+#First Tab Components
 from UIComponents.Navbar import navbar
 from UIComponents.tabs import left_tabs
 from UIComponents.MaterialProperties import material_properties
 from UIComponents.MaterialProperties2 import metal_site_defects
 from UIComponents.MaterialProperties3 import chalcogen_site_defects
 from UIComponents.SettingsGeneration import generation_settings
+
+#Second Tab Components 
+from UIComponents.BasicMicroscopeSettings import Microscope_Settings
+from UIComponents.aberrationCoeficcients import Abberation_Coeficients
+
 
 
 
@@ -24,9 +30,15 @@ app.layout = html.Div([
             html.Div(
                 [
                     left_tabs(),
+
+                    #Material Section Panels 
                     material_properties(),
                     metal_site_defects(),
                     chalcogen_site_defects(),
+
+                    #Miscroscope Section Panels
+                    Microscope_Settings(),
+                    Abberation_Coeficients()
                 ],
                 className="tab-with-panel"
             ),
@@ -45,57 +57,75 @@ app.layout = html.Div([
 
                                         # On/Off Button Functionality
 @app.callback(
-    #1-Update the CSS classes of both buttons
+    #Button Outputs 
     Output("btn-material", "className"),
     Output("btn-microscope", "className"),
 
-    #2-Show or hide the Material Properties panel
+    #First Tab Ouputs
     Output("material-panel", "style"),
-    #3-Show or hide the Metal Site Defects panel
     Output("metal-defects-panel", "style"),
-    #4-Show or hide the Chalcogen Site Defects panel
     Output("metal-Chalcogen-panel", "style"),
 
-    #Track clicks for both buttons
+    #Second Tab Outputs
+    Output("microscope-panel", "style"),
+    Output("aberration-panel", "style"),
+
+
+    #Click Inputs by User
     Input("btn-material", "n_clicks"),
     Input("btn-microscope", "n_clicks"),
 )
+
 
 def toggle_buttons(material_clicks, microscope_clicks):
     # Styles for show/hide
     visible = {"display": "block"} # Show
     hidden = {"display": "none"} #Hide
 
-    # Default State
+                                        #1-Default State(param-btn By Default Active)
+
     if not material_clicks and not microscope_clicks:
         return (
             "param-btn active-param-btn",    # Material active
             "param-btn",                     # Microscope inactive
             visible,                         # Material panel Visible
             visible,                         # Metal defects panel Visible
-            visible                          # Chalcogen defects panel Visible
+            visible,                          # Chalcogen defects panel Visible
+
+            hidden,                        # Microscope panel Hidden
+            hidden                         # Aberration panel Hidden
         )
 
-    # Which button was clicked?
+                                        #2- User Selection of Button
+                                        
+     # Which button was clicked?
     ctx = dash.callback_context.triggered_id
 
-    # Update Button styles
+
+    # If Material Button Clicked
     if ctx == "btn-material":
         return (
-            "param-btn active-param-btn",
-            "param-btn",
-            visible,
-            visible,
-            visible
-        )
-    else:
+        "param-btn active-param-btn",
+        "param-btn",
+        visible,  # material
+        visible,  # metal defects
+        visible,  # chalcogen defects
+        hidden,   # microscope is hidden
+        hidden    # aberration is hidden
+    )
+
+    # If Microscope Button Clicked
+    elif ctx == "btn-microscope":
         return (
-            "param-btn",
-            "param-btn active-param-btn",
-            hidden,
-            hidden,
-            hidden
-        )
+        "param-btn",
+        "param-btn active-param-btn",
+        hidden,   # material  is hidden
+        hidden,   # metal defects is hidden
+        hidden,   # chalcogen defects is hidden
+        visible,  # microscope
+        visible   # aberration
+    )
+
 
 if __name__ == "__main__":
     app.run(debug=True)

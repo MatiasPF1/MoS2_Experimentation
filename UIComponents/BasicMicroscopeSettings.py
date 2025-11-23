@@ -1,5 +1,12 @@
 from dash import html, dcc
 
+
+
+
+'''
+Second Part, Part 1
+'''
+
 def Microscope_Settings():
     return html.Div(
         [
@@ -58,6 +65,6 @@ def Microscope_Settings():
                 className="form-grid"
             )
         ],
-        id="material-panel",
-        className="material-panel"
+        id="microscope-panel",
+        className="microscope-panel"
     )

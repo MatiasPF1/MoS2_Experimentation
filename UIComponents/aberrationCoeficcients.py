@@ -1,5 +1,11 @@
 from dash import html, dcc
 
+
+
+'''
+Second Part, Part 2
+
+'''
 def Abberation_Coeficients():
     return html.Div(
         [
@@ -58,6 +64,6 @@ def Abberation_Coeficients():
                 className="form-grid"
             )
         ],
-        id="material-panel",
-        className="material-panel"
+        id="aberration-panel",
+        className="aberration-panel"
     )
