@@ -13,7 +13,7 @@ def metal_site_defects():
                         [
                             html.Label("Substitution Atom Number"),
                             dcc.Input(
-                                id="Substitution_Atom_Number_MetalSite",
+                                id="sub-atom-metal",
                                 type="number",
                                 value=0,
                                 className="input-field"
@@ -21,7 +21,7 @@ def metal_site_defects():
 
                             html.Label("Metal Substitution Concentration"),
                             dcc.Input(
-                                id="Metal_Substitution_Concentration",
+                                id="metal-sub-conc",
                                 type="number",
                                 value=0.000,
                                 step=0.001,
@@ -37,7 +37,7 @@ def metal_site_defects():
                         [
                             html.Label("Metal Vacancy Concentration"),
                             dcc.Input(
-                                id="Metal_Vacancy_Concentration",
+                                id="metal-vac-conc",
                                 type="number",
                                 value=0.080,
                                 step=0.001,

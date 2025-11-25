@@ -16,7 +16,7 @@ def Gaussian_Parameters():
                         [
                             html.Label("Source Size Mean(nm)"),
                             dcc.Input(
-                                id="Source_Size_Mean",
+                                id="src-size-mean",
                                 type="number",
                                 value=0,
                                 className="input-field"
@@ -24,7 +24,7 @@ def Gaussian_Parameters():
 
                             html.Label("Defocus Spread Mean(A)"),
                             dcc.Input(
-                                id="Defocus_Spread_Mean",
+                                id="defoc-spread-mean",
                                 type="number",
                                 value=0,
                                 className="input-field"
@@ -32,7 +32,7 @@ def Gaussian_Parameters():
 
                             html.Label("Probe Current Mean(A)"),
                             dcc.Input(
-                                id="Probe_Current_Mean",
+                                id="probe-cur-mean",
                                 type="number",
                                 value=0,
                                 className="input-field"
@@ -46,7 +46,7 @@ def Gaussian_Parameters():
                         [
                             html.Label("Source Size Std(nm)"),
                             dcc.Input(
-                                id="Source_Size_Std",
+                                id="src-size-std",
                                 type="number",
                                 value=0,
                                 className="input-field"
@@ -54,7 +54,7 @@ def Gaussian_Parameters():
 
                             html.Label("Defocus Spread Stf(A)"),
                             dcc.Input(
-                                id="Defocus_Spread_Stf",
+                                id="defoc-spread-std",
                                 type="number",
                                 value=0,
                                 className="input-field"
@@ -62,7 +62,7 @@ def Gaussian_Parameters():
 
                              html.Label("Probe Current Std(A)"),
                             dcc.Input(
-                                id="Probe_Current_Std",
+                                id="probe-cur-std",
                                 type="number",
                                 value=0,
                                 className="input-field"

@@ -13,7 +13,7 @@ def chalcogen_site_defects():
                         [
                             html.Label("Substitution Atom Number"),
                             dcc.Input(
-                                id="Substitution_Atom_Number_Chalcogensite",
+                                id="sub-atom-chal",
                                 type="number",
                                 value=0,
                                 className="input-field"
@@ -21,7 +21,7 @@ def chalcogen_site_defects():
 
                             html.Label("Chalcogen Substitution Concentration"),
                             dcc.Input(
-                                id="Chalcogen_Substitution_Concentration",
+                                id="chal-sub-conc",
                                 type="number",
                                 value=0.000,
                                 step=0.001,
@@ -31,7 +31,7 @@ def chalcogen_site_defects():
 
                             html.Label("One Vacancy Type Concentration"),
                             dcc.Input(
-                                id="Vacancy_Concentration",
+                                id="vac-one-conc",
                                 type="number",
                                 value=0.000,
                                 step=0.001,
@@ -47,7 +47,7 @@ def chalcogen_site_defects():
                         [
                             html.Label("Two Vacancy Type Concentration"),
                             dcc.Input(
-                                id="Two_Vacancy_Concentration",
+                                id="vac-two-conc",
                                 type="number",
                                 value=0.000,
                                 step=0.001,
@@ -57,7 +57,7 @@ def chalcogen_site_defects():
 
                             html.Label("Two Substitution Type Concentration"),
                             dcc.Input(
-                                id="Two_substitution_Type_concentration",
+                                id="sub-two-conc",
                                 type="number",
                                 value=0.000,
                                 step=0.001,
@@ -67,7 +67,7 @@ def chalcogen_site_defects():
 
                             html.Label("One Substitution Type Concentration"),
                             dcc.Input(
-                                id="One_Subsititution_Type_Concentration",
+                                id="sub-one-conc",
                                 type="number",
                                 value=0.000,
                                 step=0.001,
