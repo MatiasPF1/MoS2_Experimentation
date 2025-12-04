@@ -209,14 +209,14 @@ def store_parameters_RunGeneration(n_clicks, batch_size, mat_name, pixel_size, m
     Generation.metal_atom = int(metal_atom)
     Generation.chalcogen_atom = int(chal_atom)
     Generation.lattice_constant_a = float(lattice_const)
-    Generation.doped_metal_atom = int(sub_atom_metal) if sub_atom_metal else 0
-    Generation.metal_atom_concentration = float(metal_sub_conc) if metal_sub_conc else 0
-    Generation.metal_atom_vacancy_concentration = float(metal_vac_conc) if metal_vac_conc else 0
-    Generation.doped_chalcogen_atom = int(sub_atom_chal) if sub_atom_chal else 0
-    Generation.chalcogen_atom_concentration_two_subsititution = float(sub_two_conc) if sub_two_conc else 0
-    Generation.chalcogen_atom_concentration_one_subsititution = float(sub_one_conc) if sub_one_conc else 0
-    Generation.chalcogen_atom_concentration_one_vacancy = float(vac_one_conc) if vac_one_conc else 0
-    Generation.chalcogen_atom_concentration_two_vacancy = float(vac_two_conc) if vac_two_conc else 0
+    Generation.doped_metal_atom = int(sub_atom_metal) 
+    Generation.metal_atom_concentration = float(metal_sub_conc) 
+    Generation.metal_atom_vacancy_concentration = float(metal_vac_conc) 
+    Generation.doped_chalcogen_atom = int(sub_atom_chal) 
+    Generation.chalcogen_atom_concentration_two_subsititution = float(sub_two_conc) 
+    Generation.chalcogen_atom_concentration_one_subsititution = float(sub_one_conc) 
+    Generation.chalcogen_atom_concentration_one_vacancy = float(vac_one_conc) 
+    Generation.chalcogen_atom_concentration_two_vacancy = float(vac_two_conc) 
     
     Generation.voltage = float(voltage)
     Generation.Cs3_param_mean = float(cs3_mean)
@@ -234,9 +234,8 @@ def store_parameters_RunGeneration(n_clicks, batch_size, mat_name, pixel_size, m
     Generation.probe_current_param_mean = float(probe_cur_mean)
     Generation.probe_current_param_std = float(probe_cur_std)
     Generation.dwell_time = float(dwell_time)
-    
-    # Run the generation process
-    Generation.run_generation()
+    # Run the generation process with batch_size
+    Generation.run_generation(int(batch_size))
     
     return n_clicks
 
