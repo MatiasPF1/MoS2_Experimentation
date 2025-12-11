@@ -1,10 +1,12 @@
 import os 
 import time
 import numpy as np 
-#All Credits to Chuqiao Shi & Chia-hao Lee 20190310
+
+
+                #All Credits to Chuqiao Shi & Chia-hao Lee 20190310
     
 
-                                                # XYZ Parameters
+                             # XYZ Parameters
 #Inputs By the User
 file_name                                      = None
 pixel_size                                     = None
@@ -101,8 +103,25 @@ def run_generation(file_num):
 
 def generate_files(sample_param_dic, EM_param_dic, file_num):
     filesuffix = '_incostem_'
-    # Read variables from the dictionary
+    
+    # Create output folder structure: Downloads/STEM_MOS2/batch_X
     #---------------------------------------------------------------#
+    downloads_folder = os.path.join(os.path.expanduser("~"), "Downloads")
+    base_folder = os.path.join(downloads_folder, "STEM_MOS2")
+    if not os.path.exists(base_folder):
+        os.makedirs(base_folder)
+    
+    # Find next batch folder number
+    batch_num = 1
+    while os.path.exists(os.path.join(base_folder, f"batch_{batch_num}")):
+        batch_num += 1
+    
+    output_folder = os.path.join(base_folder, f"batch_{batch_num}")
+    os.makedirs(output_folder)
+    #---------------------------------------------------------------#
+    
+    
+   
     xtalnm     = sample_param_dic['file_name']
     image_size = sample_param_dic['image_size']
     rep_x      = sample_param_dic['rep_x']
@@ -146,7 +165,7 @@ def generate_files(sample_param_dic, EM_param_dic, file_num):
     probe_current_param                 = EM_param_dic['probe_current_param']
     dwell_time                          = EM_param_dic['dwell_time']
     #---------------------------------------------------------------#
-    Batch_File_name = 'Batch_'+str(file_num)+'files_'+xtalnm+filesuffix+str(rep_x)+'_'+str(rep_y)+'_'+str(rep_z)+'.bat'
+    Batch_File_name = os.path.join(output_folder, 'Batch_'+str(file_num)+'files_'+xtalnm+filesuffix+str(rep_x)+'_'+str(rep_y)+'_'+str(rep_z)+'.bat')
     file_batch = open(Batch_File_name,'w+')
     
     for N in range(file_num):
@@ -155,21 +174,21 @@ def generate_files(sample_param_dic, EM_param_dic, file_num):
         #---------------------------------------------------------------#
         #images files
         filename = xtalnm+filesuffix+str(rep_x)+'_'+str(rep_y)+'_'+str(rep_z)+'_'+str(N)
-        fid      = open(filename+'.xyz', 'w+')              #images files
+        fid      = open(os.path.join(output_folder, filename+'.xyz'), 'w+')              #images files
         
         #Label files
         filename_metal_Doped    = xtalnm+'_metal_Doped'+filesuffix+str(rep_x)+'_'+str(rep_y)+'_'+str(rep_z)+'_'+str(N)
-        fid_metal_Doped         = open(filename_metal_Doped+'.xyz', 'w+')
+        fid_metal_Doped         = open(os.path.join(output_folder, filename_metal_Doped+'.xyz'), 'w+')
         filename_metal_vacancy  = xtalnm+'_metal_vacancy'+filesuffix+str(rep_x)+'_'+str(rep_y)+'_'+str(rep_z)+'_'+str(N)
-        fid_metal_vacancy       = open(filename_metal_vacancy+'.xyz', 'w+')
+        fid_metal_vacancy       = open(os.path.join(output_folder, filename_metal_vacancy+'.xyz'), 'w+')
         filename_2Doped         = xtalnm+'_2Doped'+filesuffix+str(rep_x)+'_'+str(rep_y)+'_'+str(rep_z)+'_'+str(N)
-        fid_2Doped              = open(filename_2Doped+'.xyz', 'w+')
+        fid_2Doped              = open(os.path.join(output_folder, filename_2Doped+'.xyz'), 'w+')
         filename_1Doped         = xtalnm+'_1Doped'+filesuffix+str(rep_x)+'_'+str(rep_y)+'_'+str(rep_z)+'_'+str(N)
-        fid_1Doped              = open(filename_1Doped+'.xyz', 'w+')
+        fid_1Doped              = open(os.path.join(output_folder, filename_1Doped+'.xyz'), 'w+')
         filename_1vacancy       = xtalnm+'_1vacancy'+filesuffix+str(rep_x)+'_'+str(rep_y)+'_'+str(rep_z)+'_'+str(N)
-        fid_1vacancy            = open(filename_1vacancy+'.xyz', 'w+')
+        fid_1vacancy            = open(os.path.join(output_folder, filename_1vacancy+'.xyz'), 'w+')
         filename_2vacancy       = xtalnm+'_2vacancy'+filesuffix+str(rep_x)+'_'+str(rep_y)+'_'+str(rep_z)+'_'+str(N)
-        fid_2vacancy            = open(filename_2vacancy+'.xyz', 'w+')
+        fid_2vacancy            = open(os.path.join(output_folder, filename_2vacancy+'.xyz'), 'w+')
         #---------------------------------------------------------------#
         
         
@@ -409,13 +428,13 @@ def generate_files(sample_param_dic, EM_param_dic, file_num):
         
         #Generate parameter files
         #---------------------------------------------------------------#
-        fid_param                    = open(filename+'.param','w+')
-        fid_metal_Doped_param        = open(filename_metal_Doped+'.param','w+')
-        fid_metal_vacancy_param      = open(filename_metal_vacancy+'.param','w+')
-        fid_2Doped_param             = open(filename_2Doped+'.param','w+')
-        fid_1Doped_param             = open(filename_1Doped+'.param','w+')
-        fid_1vacancy_param           = open(filename_1vacancy+'.param','w+')
-        fid_2vacancy_param           = open(filename_2vacancy+'.param','w+')
+        fid_param                    = open(os.path.join(output_folder, filename+'.param'),'w+')
+        fid_metal_Doped_param        = open(os.path.join(output_folder, filename_metal_Doped+'.param'),'w+')
+        fid_metal_vacancy_param      = open(os.path.join(output_folder, filename_metal_vacancy+'.param'),'w+')
+        fid_2Doped_param             = open(os.path.join(output_folder, filename_2Doped+'.param'),'w+')
+        fid_1Doped_param             = open(os.path.join(output_folder, filename_1Doped+'.param'),'w+')
+        fid_1vacancy_param           = open(os.path.join(output_folder, filename_1vacancy+'.param'),'w+')
+        fid_2vacancy_param           = open(os.path.join(output_folder, filename_2vacancy+'.param'),'w+')
         #---------------------------------------------------------------#
         #Wirte the xyz filename as the header
         #---------------------------------------------------------------#
