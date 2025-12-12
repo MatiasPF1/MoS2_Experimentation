@@ -2,7 +2,11 @@ from dash import html, dcc
 
 def generation_settings():
     return html.Div(
-        [                                  # Generation Settings Panel
+        [
+            # Input Values Display Box - appears first
+            values_display(),
+            
+            # Generation Settings Panel - appears below
             html.Div(
                 [
                     html.Div(
@@ -44,9 +48,7 @@ def generation_settings():
                     )
                 ],
                 className="right-panel generation-panel"
-            ),
-            # Values Display Box - appears below generation settings
-            values_display()
+            )
         ],
         className="right-panel-container"
     )
@@ -59,8 +61,7 @@ def values_display():
                     html.I(className="fas fa-clipboard-list", style={"marginRight": "10px"}),
                     html.Span("Input Values")
                 ],
-                className="right-panel-title",
-                style={"marginTop": "30px"}
+                className="right-panel-title"
             ),
             html.Div(id="values-display-content", className="values-display-box")
         ],

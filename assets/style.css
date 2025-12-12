@@ -140,7 +140,7 @@ body {
 
 
 
-/*                                                   PARAMETER TOGGLE BUTTONS                                                          */
+/*                          PARAMETER TOGGLE BUTTONS                                                          */
 
 .param-btn-container {
     display: flex;
@@ -285,11 +285,12 @@ label {
 
 
 
-/*                                                  RIGHT PANEL (GENERATION SETTINGS)                                            */
+/*                     RIGHT PANEL (GENERATION SETTINGS)                                            */
 
 .right-panel-container {
     width: 380px;
-    margin-top: 120px;
+    margin-top: 25px;
+
 }
 
 .right-panel {

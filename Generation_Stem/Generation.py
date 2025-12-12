@@ -8,37 +8,37 @@ import numpy as np
 
                              # XYZ Parameters
 #Inputs By the User
-file_name                                      = None
-pixel_size                                     = None
-image_size                                     = None
-metal_atom                                     = None
-chalcogen_atom                                 = None
-lattice_constant_a                             = None
-doped_metal_atom                               = None
-metal_atom_concentration                       = None
-metal_atom_vacancy_concentration               = None
-doped_chalcogen_atom                           = None
-chalcogen_atom_concentration_two_subsititution = None
-chalcogen_atom_concentration_one_subsititution = None
-chalcogen_atom_concentration_one_vacancy       = None
-chalcogen_atom_concentration_two_vacancy       = None
+file_name                                      = 0
+pixel_size                                     = 0
+image_size                                     = 0
+metal_atom                                     = 0
+chalcogen_atom                                 = 0
+lattice_constant_a                             = 0
+doped_metal_atom                               = 0
+metal_atom_concentration                       = 0
+metal_atom_vacancy_concentration               = 0
+doped_chalcogen_atom                           = 0
+chalcogen_atom_concentration_two_subsititution = 0
+chalcogen_atom_concentration_one_subsititution = 0
+chalcogen_atom_concentration_one_vacancy       = 0
+chalcogen_atom_concentration_two_vacancy       = 0
 
-voltage                   =   None
-Cs3_param_mean            =   None
-Cs3_param_std             =   None
-Cs5_param_mean            =   None
-Cs5_param_std             =   None
-df                        =   None
-aperture                  =   None
-ADF_angle_min             =   None
-ADF_angle_max             =   None
-Source_size_param_mean    =   None
-Source_size_param_std     =   None
-defocus_spread_param_mean =   None
-defocus_spread_param_std  =   None
-probe_current_param_mean  =   None
-probe_current_param_std   =   None
-dwell_time                =   None
+voltage                   =   0
+Cs3_param_mean            =   0
+Cs3_param_std             =   0
+Cs5_param_mean            =   0
+Cs5_param_std             =   0
+df                        =   0
+aperture                  =   0
+ADF_angle_min             =   0
+ADF_angle_max             =   0
+Source_size_param_mean    =   0
+Source_size_param_std     =   0
+defocus_spread_param_mean =   0
+defocus_spread_param_std  =   0
+probe_current_param_mean  =   0
+probe_current_param_std   =   0
+dwell_time                =   0
 
 # Dictionaries (initialized in run_generation)
 sample_param_dic = {}
