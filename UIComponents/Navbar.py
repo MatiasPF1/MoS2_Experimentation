@@ -12,12 +12,12 @@ navbar = html.Div(
                             html.I(className="", style={
                                 "fontSize": "24px", 
                                 "marginRight": "12px",
-                                "color": "#a78bfa"
+                                "color": "#f0f0f5",
                             }),
                             html.Span("MoS₂", style={
                                 "fontWeight": "700",
                                 "fontSize": "22px",
-                                "color": "#a78bfa"
+                                "color": "#f0f0f5",
                             }),
                             html.Span(" Image Synthesis Platform", style={
                                 "fontWeight": "600",
