@@ -25,7 +25,7 @@ from UIComponents.GaussianParameters import Gaussian_Parameters
 # Callback For Display Vallues Collumn 
 from UIComponents.DisplayValues import register_display_values_callback
 # Import Generation module to update variables
-from Generation_Stem import Generation
+from XYZ_Params_Generation import Generation
 
 ##########################################################################################################################
 # Imports for STEM-Generation page 
