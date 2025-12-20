@@ -4,7 +4,7 @@ def file_input_panel():
     return html.Div(
         [
             html.H4("Input Files", className="section-title"),
-            html.P("Select XYZ and parameter files for STEM generation", className="section-subtitle"),
+            html.P("Select XYZ, Parameter and Batch files for STEM generation", className="section-subtitle"),
             html.Div(
                 [
                     # XYZ File Input
@@ -41,7 +41,28 @@ def file_input_panel():
                             html.Div(id="params-file-name", className="file-name-display")
                         ],
                         className="file-input-group"
-                    )
+                    ),
+                    
+                    
+                    # Batch Input
+                    html.Div(
+                        [
+                            html.Label("Batch File (.bat)"),
+                            dcc.Upload(
+                                id="batch-file-upload",
+                                children=html.Div([
+                                    html.I(className="fas fa-cloud-upload-alt", style={"marginRight": "8px"}),
+                                    "Drag & Drop or Click to Select"
+                                ]),
+                                className="file-upload-box",
+                                multiple=False
+                            ),
+                            html.Div(id="batch-file-name", className="file-name-display")
+                        ],
+                        className="file-input-group"
+                    ),
+                    
+                    
                 ],
                 className="file-inputs-container"
             )

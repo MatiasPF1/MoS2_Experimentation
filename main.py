@@ -72,12 +72,6 @@ def xyz_generation_page():
         className="main-content"
     )
 
-"""Content for Pre-Processing page"""
-def pre_processing_page():
-    return html.Div(
-        [],
-        className="main-content"
-    )
 
 """Content for STEM-Generation page"""
 def stem_generation_page():
@@ -92,6 +86,15 @@ def stem_generation_page():
         ],
         className="main-content"
     )
+
+
+"""Content for Pre-Processing page"""
+def pre_processing_page():
+    return html.Div(
+        [],
+        className="main-content"
+    )
+
 
 """Content for ResUnet page"""
 def resunet_page():
@@ -113,7 +116,6 @@ app.layout = html.Div([
         [
             sidebar, # Sidebar on the left
             html.Div(id='page-content', children=xyz_generation_page()) # Main content area 
-
         ],
         className="section-container"
     )
