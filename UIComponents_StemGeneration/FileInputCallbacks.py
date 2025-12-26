@@ -3,7 +3,8 @@ File Input Callbacks Module
 Handles file upload callbacks and storage for STEM generation files (XYZ, Params, Batch)
 """
 
-from dash import Input, Output, State
+from dash import Input, Output, State, html
+from _2_computem_stem_generation import stem_executor
 
 
 ########################################################################################################################
@@ -94,7 +95,7 @@ def register_file_upload_callbacks(app):
             # Store the content in global variable
             params_file_content = contents
             # Return filename to display in UI
-            return f"✓ {filename}"
+            return f"{filename}"
         return ""
 
 
@@ -112,8 +113,48 @@ def register_file_upload_callbacks(app):
         """
         global batch_file_content
         if contents is not None:
-            # Store the base64 encoded content in global variable
+            # Store the content in global variable
             batch_file_content = contents
-            # Return filename to display in UI
-            return f"✓ {filename}"
+            return f"{filename}"            # Return filename to display in UI
         return ""
+
+
+    #4-Callback for Generate STEM Images button
+    @app.callback(
+        Output("generate-stem-btn", "children"),  # Updates button text to show status
+        Input("generate-stem-btn", "n_clicks"),  # Triggered when button is clicked
+        State("xyz-file-upload", "filename"),  # Gets XYZ filename
+        State("params-file-upload", "filename"),  # Gets params filename
+        prevent_initial_call=True  # Don't run on page load
+    )
+    def generate_stem_images(n_clicks, xyz_filename, params_filename):
+        """
+        Execute incostem.exe with uploaded XYZ and params files
+        """
+        global xyz_file_content, params_file_content
+        
+        # Check if required files are uploaded
+        if xyz_file_content is None or params_file_content is None:
+            return [
+                html.I(className="fas fa-exclamation-triangle", style={"marginRight": "8px"}),
+                "Please upload both XYZ and Params files first!"
+            ]
+        # Execute incostem.exe
+        result = stem_executor.execute_incostem(
+            xyz_file_content,
+            params_file_content,
+            xyz_filename,
+            params_filename
+        )
+        
+        # Update button text based on result
+        if result["success"]:
+            return [
+                html.I(className="fas fa-check-circle", style={"marginRight": "8px"}),
+                "Generation Complete!"
+            ]
+        else:
+            return [
+                html.I(className="fas fa-times-circle", style={"marginRight": "8px"}),
+                f"Error: {result['message']}"
+            ]
