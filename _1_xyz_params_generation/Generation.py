@@ -6,39 +6,41 @@ import numpy as np
                 #All Credits to Chuqiao Shi & Chia-hao Lee 20190310
     
 
-                             # XYZ Parameters
+                                            # XYZ/Parameters
+'''''Default Parameters if the User does not provide any and to avoid errors'''
 #Inputs By the User
-file_name                                      = 0
-pixel_size                                     = 0
-image_size                                     = 0
-metal_atom                                     = 0
-chalcogen_atom                                 = 0
-lattice_constant_a                             = 0
-doped_metal_atom                               = 0
-metal_atom_concentration                       = 0
-metal_atom_vacancy_concentration               = 0
-doped_chalcogen_atom                           = 0
-chalcogen_atom_concentration_two_subsititution = 0
-chalcogen_atom_concentration_one_subsititution = 0
-chalcogen_atom_concentration_one_vacancy       = 0
-chalcogen_atom_concentration_two_vacancy       = 0
+file_name = 0
+pixel_size = 0
+image_size = 0
+metal_atom = 0
+chalcogen_atom = 0
+lattice_constant_a = 0
+doped_metal_atom = 0
+metal_atom_concentration = 0.0
+metal_atom_vacancy_concentration = 0.0
+doped_chalcogen_atom = 0
+chalcogen_atom_concentration_two_subsititution = 0.0
+chalcogen_atom_concentration_one_subsititution = 0.0
+chalcogen_atom_concentration_one_vacancy = 0.0
+chalcogen_atom_concentration_two_vacancy = 0.0
 
-voltage                   =   0
-Cs3_param_mean            =   0
-Cs3_param_std             =   0
-Cs5_param_mean            =   0
-Cs5_param_std             =   0
-df                        =   0
-aperture                  =   0
-ADF_angle_min             =   0
-ADF_angle_max             =   0
-Source_size_param_mean    =   0
-Source_size_param_std     =   0
-defocus_spread_param_mean =   0
-defocus_spread_param_std  =   0
-probe_current_param_mean  =   0
-probe_current_param_std   =   0
-dwell_time                =   0
+
+voltage = 0
+Cs3_param_mean = 0
+Cs3_param_std  = 0
+Cs5_param_mean = 0
+Cs5_param_std  = 0
+df = 0
+aperture = 0
+ADF_angle_min = 0
+ADF_angle_max = 0
+Source_size_param_mean = 0
+Source_size_param_std  = 0
+defocus_spread_param_mean = 0
+defocus_spread_param_std  = 0
+probe_current_param_mean = 0
+probe_current_param_std  = 0
+dwell_time = 0
 
 # Dictionaries (initialized in run_generation)
 sample_param_dic = {}
@@ -161,7 +163,7 @@ def generate_files(sample_param_dic, EM_param_dic, file_num):
     Higher_order                        = 'END'
     Source_size_param                   = EM_param_dic['Source_size_param']
     defocus_spread_param                = EM_param_dic['defocus_spread_param']
-    counting_noise                      = 'y'
+    counting_noise                      = 'n'
     probe_current_param                 = EM_param_dic['probe_current_param']
     dwell_time                          = EM_param_dic['dwell_time']
     #---------------------------------------------------------------#
@@ -496,7 +498,7 @@ def generate_files(sample_param_dic, EM_param_dic, file_num):
         #---------------------------------------------------------------#
         fid_param.close()
         fid_metal_Doped_param.close()
-        fid_metal_vacancy.close()
+        fid_metal_vacancy_param.close()
         fid_2Doped_param.close()
         fid_1Doped_param.close()
         fid_1vacancy_param.close()
