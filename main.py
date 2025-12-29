@@ -333,9 +333,9 @@ def store_parameters_RunGeneration(n_clicks, batch_size, mat_name, pixel_size, m
         return dash.no_update
     
     # Helper function converts None/empty to default values
-    # Update Generation.py variables with safe conversions
+    # Generation.py variables with safe conversions
     Generation.file_name = mat_name if mat_name else 'MoS2'
-    Generation.pixel_size = safe_float(pixel_size)
+    Generation.pixel_size = safe_float(pixel_size, 0.1) # Default pixel size 0.1 
     Generation.image_size = safe_float(img_size, 512) # Default image size 512
     Generation.metal_atom = safe_int(metal_atom, 42) # Default Mo
     Generation.chalcogen_atom = safe_int(chal_atom, 16) # Default S
@@ -359,12 +359,12 @@ def store_parameters_RunGeneration(n_clicks, batch_size, mat_name, pixel_size, m
     Generation.ADF_angle_min = safe_float(adf_angle_min, 70)
     Generation.ADF_angle_max = safe_float(adf_angle_max, 200)
     Generation.Source_size_param_mean = safe_float(src_size_mean, 0.5) # Default 0.5
-    Generation.Source_size_param_std = safe_float(src_size_std)
+    Generation.Source_size_param_std = safe_float(src_size_std, 0.1) # Default 0.1
     Generation.defocus_spread_param_mean = safe_float(defoc_spread_mean, 10) # Default 10
-    Generation.defocus_spread_param_std = safe_float(defoc_spread_std)
+    Generation.defocus_spread_param_std = safe_float(defoc_spread_std, 1) # Default 1
     Generation.probe_current_param_mean = safe_float(probe_cur_mean, 100) # Default 100
-    Generation.probe_current_param_std = safe_float(probe_cur_std)
-    Generation.dwell_time = safe_float(dwell_time, 1.0) # Default 1.0 us
+    Generation.probe_current_param_std = safe_float(probe_cur_std, 10) # Default 10
+    Generation.dwell_time = safe_float(dwell_time, 1.0) # Default 1.0 
     
     # Run the generation process
     Generation.run_generation(int(batch_size))

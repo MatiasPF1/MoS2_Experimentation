@@ -21,7 +21,7 @@ def execute_incostem(xyz_content, params_content, xyz_filename, params_filename)
         }
     
     try:
-        ###### 1) Assigning the XYZ and Params File in the Same Directory as this Script ######
+                        ###### 1) Assigning the XYZ and Params File in the Same Directory as this Script ######
         
         
         # 1-Decode base64 content (format: "data:application/octet-stream;base64,<content>")
@@ -38,7 +38,7 @@ def execute_incostem(xyz_content, params_content, xyz_filename, params_filename)
         
         
         
-        ###### 2) Saving the XYZ and Params Files in the Same Directory as this Script ######
+                        ###### 2) Saving the XYZ and Params Files in the Same Directory as this Script ######
         
         
         with open(xyz_file_path, 'wb') as f: # Save XYZ file
@@ -48,7 +48,7 @@ def execute_incostem(xyz_content, params_content, xyz_filename, params_filename)
             f.write(params_decoded)
             
         
-        ###### 3) Execute incostem.exe with Params file piped as stdin (Like in Powershell) ######
+                        ###### 3) Execute incostem.exe with Params file piped as stdin (Like in Powershell) ######
         
         
         # This mimics the Terminal Command: Get-Content <params_file> | .\incostem.exe
