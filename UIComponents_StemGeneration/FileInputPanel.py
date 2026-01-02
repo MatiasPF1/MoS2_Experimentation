@@ -1,92 +1,57 @@
-from dash import html, dcc
+from dash import html
 
 
 ########################################################################################################################
-#                                    File Input Panel Component 
+#                                    File Input Panel Component - Placeholder
 #########################################################################################################################
 
 
 def file_input_panel():
+    """
+    Placeholder panel for STEM image visualization
+    Will be implemented in future versions with automatic generation
+    """
     return html.Div(
         [
-            html.H4("Input Files", className="section-title"),
-            html.P("Select XYZ, Parameter and Batch files for STEM generation", className="section-subtitle"),
             html.Div(
                 [
-                    # XYZ File Input
-                    html.Div(
-                        [
-                            html.Label("XYZ File"),
-                            dcc.Upload(
-                                id="xyz-file-upload",
-                                children=html.Div([
-                                    html.I(className="fas fa-cloud-upload-alt", style={"marginRight": "8px"}),
-                                    "Drag & Drop or Click to Select"
-                                ]),
-                                className="file-upload-box", # CSS class for styling
-                                multiple=False # Single file upload
-                            ),
-                            html.Div(id="xyz-file-name", className="file-name-display")
-                        ],
-                        className="file-input-group" 
+                    html.I(className="fas fa-microscope", style={
+                        "fontSize": "64px",
+                        "color": "#666",
+                        "marginBottom": "20px"
+                    }),
+                    html.H3("STEM Image Visualization", style={
+                        "color": "#333",
+                        "marginBottom": "15px"
+                    }),
+                    html.P(
+                        "You will be able to visualize STEM images here in future versions.",
+                        style={
+                            "color": "#666",
+                            "fontSize": "16px",
+                            "textAlign": "center",
+                            "maxWidth": "600px"
+                        }
                     ),
-
-                    # Params File Input
-                    html.Div(
-                        [
-                            html.Label("Params File"),
-                            dcc.Upload(
-                                id="params-file-upload",
-                                children=html.Div([
-                                    html.I(className="fas fa-cloud-upload-alt", style={"marginRight": "8px"}),
-                                    "Drag & Drop or Click to Select"
-                                ]),
-                                className="file-upload-box", # CSS class for styling
-                                multiple=False # Single file upload
-                            ),
-                            html.Div(id="params-file-name", className="file-name-display")
-                        ],
-                        className="file-input-group"
-                    ),
-                    
-                    
-                    # Batch Input
-                    html.Div(
-                        [
-                            html.Label("Batch File (.bat)"),
-                            dcc.Upload(
-                                id="batch-file-upload",
-                                children=html.Div([
-                                    html.I(className="fas fa-cloud-upload-alt", style={"marginRight": "8px"}),
-                                    "Drag & Drop or Click to Select"
-                                ]),
-                                className="file-upload-box", # CSS class for styling
-                                multiple=False # Single file upload
-                            ),
-                            html.Div(id="batch-file-name", className="file-name-display")
-                        ],
-                        className="file-input-group"
-                    ),
-                    
-                    # Generate STEM Button
-                    html.Div(
-                        [
-                            html.Button(
-                                [
-                                    html.I(className="fas fa-play", style={"marginRight": "8px"}),
-                                    "Generate STEM Images"
-                                ],
-                                id="generate-stem-btn",
-                                className="generate-btn",
-                                n_clicks=0
-                            )
-                        ],
-                        className="button-container",
-                        style={"marginTop": "5px"}
-                    ),
-                    
+                    html.P(
+                        "The system will automatically generate and display STEM images after XYZ/Parameter file generation.",
+                        style={
+                            "color": "#999",
+                            "fontSize": "14px",
+                            "textAlign": "center",
+                            "maxWidth": "600px",
+                            "marginTop": "10px"
+                        }
+                    )
                 ],
-                className="file-inputs-container"
+                style={
+                    "display": "flex",
+                    "flexDirection": "column",
+                    "alignItems": "center",
+                    "justifyContent": "center",
+                    "minHeight": "400px",
+                    "padding": "40px"
+                }
             )
         ],
         id="file-input-panel",

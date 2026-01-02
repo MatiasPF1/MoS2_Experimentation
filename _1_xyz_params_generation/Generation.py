@@ -1,12 +1,13 @@
 import os 
 import time
-import numpy as np 
+import numpy as np
+from _1_batch_workflow import batch_executor 
 
 
                 #All Credits to Chuqiao Shi & Chia-hao Lee 20190310
     
 
-                                            # XYZ/Parameters
+                                # XYZ/Parameters Generation
 #Inputs By the User, this is just for initialization
 file_name = 0
 pixel_size = 0
@@ -49,12 +50,9 @@ EM_param_dic = {}
 def run_generation(file_num):
     """
     Main generation function to be called after all parameters are set.
-    This will contain your generation logic.
     Args:
         file_num (int): Number of files to generate
     """
-    print(f"run_generation called with file_num: {file_num}")
-    print(f"Parameters: file_name={file_name}, pixel_size={pixel_size}, image_size={image_size}")
     
      # Update dictionaries with current variable values
     sample_param_dic['file_name'] = file_name
@@ -108,24 +106,24 @@ def run_generation(file_num):
 def generate_files(sample_param_dic, EM_param_dic, file_num):
     filesuffix = '_incostem_'
     
-    # Create output folder structure: Downloads/STEM_MOS2/batch_X
+    # Create batch folder structure using batch workflow
     #---------------------------------------------------------------#
     downloads_folder = os.path.join(os.path.expanduser("~"), "Downloads")
     base_folder = os.path.join(downloads_folder, "STEM_MOS2")
-    print(f"Creating base folder: {base_folder}")
     if not os.path.exists(base_folder):
         os.makedirs(base_folder)
-        print(f"Base folder created: {base_folder}")
     
     # Find next batch folder number
     batch_num = 1
     while os.path.exists(os.path.join(base_folder, f"batch_{batch_num}")):
         batch_num += 1
     
-    output_folder = os.path.join(base_folder, f"batch_{batch_num}")
-    os.makedirs(output_folder)
-    print(f"Output folder created: {output_folder}")
-    print(f"Generating {file_num} files...")
+    # Create batch folders with inputs/outputs structure
+    folders = batch_executor.create_batch_folders(base_folder, batch_num)
+    
+    # Copy incostem.exe and DLL to batch folder
+    if not batch_executor.copy_incostem_files(folders['batch']):
+        print("Warning: Could not copy incostem files. Execution may fail.")
     #---------------------------------------------------------------#
     
     
@@ -173,58 +171,30 @@ def generate_files(sample_param_dic, EM_param_dic, file_num):
     probe_current_param                 = EM_param_dic['probe_current_param']
     dwell_time                          = EM_param_dic['dwell_time']
     #---------------------------------------------------------------#
-    Batch_File_name = os.path.join(output_folder, 'Batch_'+str(file_num)+'files_'+xtalnm+filesuffix+str(rep_x)+'_'+str(rep_y)+'_'+str(rep_z)+'.bat')
-    file_batch = open(Batch_File_name,'w+')
+    inputs_main = folders['inputs_main']
+    inputs_labels = folders['inputs_labels']
     
     for N in range(file_num):
         
         #Write .xyz file names for the images files and the labels files
         #---------------------------------------------------------------#
-        #images files
+        #images files - save to inputs/main/
         filename = xtalnm+filesuffix+str(rep_x)+'_'+str(rep_y)+'_'+str(rep_z)+'_'+str(N)
-        fid      = open(os.path.join(output_folder, filename+'.xyz'), 'w+')              #images files
+        fid      = open(os.path.join(inputs_main, filename+'.xyz'), 'w+')              #images files
         
-        #Label files
+        #Label files - save to inputs/labels/
         filename_metal_Doped    = xtalnm+'_metal_Doped'+filesuffix+str(rep_x)+'_'+str(rep_y)+'_'+str(rep_z)+'_'+str(N)
-        fid_metal_Doped         = open(os.path.join(output_folder, filename_metal_Doped+'.xyz'), 'w+')
+        fid_metal_Doped         = open(os.path.join(inputs_labels, filename_metal_Doped+'.xyz'), 'w+')
         filename_metal_vacancy  = xtalnm+'_metal_vacancy'+filesuffix+str(rep_x)+'_'+str(rep_y)+'_'+str(rep_z)+'_'+str(N)
-        fid_metal_vacancy       = open(os.path.join(output_folder, filename_metal_vacancy+'.xyz'), 'w+')
+        fid_metal_vacancy       = open(os.path.join(inputs_labels, filename_metal_vacancy+'.xyz'), 'w+')
         filename_2Doped         = xtalnm+'_2Doped'+filesuffix+str(rep_x)+'_'+str(rep_y)+'_'+str(rep_z)+'_'+str(N)
-        fid_2Doped              = open(os.path.join(output_folder, filename_2Doped+'.xyz'), 'w+')
+        fid_2Doped              = open(os.path.join(inputs_labels, filename_2Doped+'.xyz'), 'w+')
         filename_1Doped         = xtalnm+'_1Doped'+filesuffix+str(rep_x)+'_'+str(rep_y)+'_'+str(rep_z)+'_'+str(N)
-        fid_1Doped              = open(os.path.join(output_folder, filename_1Doped+'.xyz'), 'w+')
+        fid_1Doped              = open(os.path.join(inputs_labels, filename_1Doped+'.xyz'), 'w+')
         filename_1vacancy       = xtalnm+'_1vacancy'+filesuffix+str(rep_x)+'_'+str(rep_y)+'_'+str(rep_z)+'_'+str(N)
-        fid_1vacancy            = open(os.path.join(output_folder, filename_1vacancy+'.xyz'), 'w+')
+        fid_1vacancy            = open(os.path.join(inputs_labels, filename_1vacancy+'.xyz'), 'w+')
         filename_2vacancy       = xtalnm+'_2vacancy'+filesuffix+str(rep_x)+'_'+str(rep_y)+'_'+str(rep_z)+'_'+str(N)
-        fid_2vacancy            = open(os.path.join(output_folder, filename_2vacancy+'.xyz'), 'w+')
-        #---------------------------------------------------------------#
-        
-        
-        #Write commands into the batch file 
-        #---------------------------------------------------------------#
-        batch_str                = 'incostem.exe<'+filename+'.param \n'
-        batch_metal_Doped_str    = 'incostem.exe<'+filename_metal_Doped+'.param \n'
-        batch_metal_vacancy_str  = 'incostem.exe<'+filename_metal_vacancy+'.param \n'   
-        batch_2Doped_str         = 'incostem.exe<'+filename_2Doped+'.param \n'  
-        batch_1Doped_str         = 'incostem.exe<'+filename_1Doped+'.param \n' 
-        batch_1vacancy_str       = 'incostem.exe<'+filename_1vacancy+'.param \n'
-        batch_2vacancy_str       = 'incostem.exe<'+filename_2vacancy+'.param \n'
-        
-        
-        file_batch.write(batch_str)
-        #Through the defect concentration to determine if needed to write.
-        if metal_doped_prob>0:
-            file_batch.write(batch_metal_Doped_str)
-        if metal_doped_prob>0:
-            file_batch.write(batch_metal_vacancy_str)
-        if sample_param_dic['chalcogen_atom_concentration_two_subsititution']>0:
-            file_batch.write(batch_2Doped_str)
-        if sample_param_dic['chalcogen_atom_concentration_one_subsititution']>0:
-            file_batch.write(batch_1Doped_str)
-        if sample_param_dic['chalcogen_atom_concentration_one_vacancy']>0:
-            file_batch.write(batch_1vacancy_str)
-        if sample_param_dic['chalcogen_atom_concentration_two_vacancy']>0:
-            file_batch.write(batch_2vacancy_str)
+        fid_2vacancy            = open(os.path.join(inputs_labels, filename_2vacancy+'.xyz'), 'w+')
         #---------------------------------------------------------------#
         
         
@@ -436,34 +406,34 @@ def generate_files(sample_param_dic, EM_param_dic, file_num):
         
         #Generate parameter files
         #---------------------------------------------------------------#
-        fid_param                    = open(os.path.join(output_folder, filename+'.param'),'w+')
-        fid_metal_Doped_param        = open(os.path.join(output_folder, filename_metal_Doped+'.param'),'w+')
-        fid_metal_vacancy_param      = open(os.path.join(output_folder, filename_metal_vacancy+'.param'),'w+')
-        fid_2Doped_param             = open(os.path.join(output_folder, filename_2Doped+'.param'),'w+')
-        fid_1Doped_param             = open(os.path.join(output_folder, filename_1Doped+'.param'),'w+')
-        fid_1vacancy_param           = open(os.path.join(output_folder, filename_1vacancy+'.param'),'w+')
-        fid_2vacancy_param           = open(os.path.join(output_folder, filename_2vacancy+'.param'),'w+')
+        fid_param                    = open(os.path.join(inputs_main, filename+'.param'),'w+')
+        fid_metal_Doped_param        = open(os.path.join(inputs_labels, filename_metal_Doped+'.param'),'w+')
+        fid_metal_vacancy_param      = open(os.path.join(inputs_labels, filename_metal_vacancy+'.param'),'w+')
+        fid_2Doped_param             = open(os.path.join(inputs_labels, filename_2Doped+'.param'),'w+')
+        fid_1Doped_param             = open(os.path.join(inputs_labels, filename_1Doped+'.param'),'w+')
+        fid_1vacancy_param           = open(os.path.join(inputs_labels, filename_1vacancy+'.param'),'w+')
+        fid_2vacancy_param           = open(os.path.join(inputs_labels, filename_2vacancy+'.param'),'w+')
         #---------------------------------------------------------------#
-        #Wirte the xyz filename as the header
+        #Write the xyz filename with relative path from batch folder
         #---------------------------------------------------------------#
-        fid_param.write(filename+'.xyz \n1 1 1\n')
-        fid_metal_Doped_param.write(filename_metal_Doped+'.xyz \n1 1 1\n')
-        fid_metal_vacancy_param.write(filename_metal_vacancy+'.xyz \n1 1 1\n')
-        fid_2Doped_param.write(filename_2Doped+'.xyz \n1 1 1\n')
-        fid_1Doped_param.write(filename_1Doped+'.xyz \n1 1 1\n')
-        fid_1vacancy_param.write(filename_1vacancy+'.xyz \n1 1 1\n')
-        fid_2vacancy_param.write(filename_2vacancy+'.xyz \n1 1 1\n')
+        fid_param.write('inputs/main/'+filename+'.xyz \n1 1 1\n')
+        fid_metal_Doped_param.write('inputs/labels/'+filename_metal_Doped+'.xyz \n1 1 1\n')
+        fid_metal_vacancy_param.write('inputs/labels/'+filename_metal_vacancy+'.xyz \n1 1 1\n')
+        fid_2Doped_param.write('inputs/labels/'+filename_2Doped+'.xyz \n1 1 1\n')
+        fid_1Doped_param.write('inputs/labels/'+filename_1Doped+'.xyz \n1 1 1\n')
+        fid_1vacancy_param.write('inputs/labels/'+filename_1vacancy+'.xyz \n1 1 1\n')
+        fid_2vacancy_param.write('inputs/labels/'+filename_2vacancy+'.xyz \n1 1 1\n')
         #---------------------------------------------------------------#
         
-        #Save the image as .tif files
+        #Save the image as .tif files with relative path to outputs folder
         #---------------------------------------------------------------#
-        fid_param.write('Image'+filename+'.tif')
-        fid_metal_Doped_param.write('metal_Doped_'+filename+'.tif')
-        fid_metal_vacancy_param.write('metal_vacancy_'+filename+'.tif')
-        fid_2Doped_param.write('2Doped_'+filename+'.tif')
-        fid_1Doped_param.write('1Doped_'+filename+'.tif')
-        fid_1vacancy_param.write('1vacancy_'+filename+'.tif')
-        fid_2vacancy_param.write('2vacancy_'+filename+'.tif')
+        fid_param.write('outputs/main/Image'+filename+'.tif')
+        fid_metal_Doped_param.write('outputs/labels/metal_Doped_'+filename+'.tif')
+        fid_metal_vacancy_param.write('outputs/labels/metal_vacancy_'+filename+'.tif')
+        fid_2Doped_param.write('outputs/labels/2Doped_'+filename+'.tif')
+        fid_1Doped_param.write('outputs/labels/1Doped_'+filename+'.tif')
+        fid_1vacancy_param.write('outputs/labels/1vacancy_'+filename+'.tif')
+        fid_2vacancy_param.write('outputs/labels/2vacancy_'+filename+'.tif')
         #---------------------------------------------------------------#
         
         #Set parameters
@@ -488,13 +458,6 @@ def generate_files(sample_param_dic, EM_param_dic, file_num):
         # Correct format: after defocus_spread, answer y/n to noise question, then probe current/dwell time
         GeneralParam        = image_size_str+STEM_Param_str+ADF_str+High_order_str+source_size_str+Defocus_str+'\ny'+noise_str
         GeneralParam_defect = image_size_str+STEM_Param_str+ADF_str+High_order_str+source_size_str+Defocus_str+'\nn'
-        
-        # Debug: Print the first param file content for inspection
-        if N == 0:
-            print("\n=== PARAMETER FILE CONTENT (FIRST FILE) ===")
-            print(f"Filename: {filename}.xyz")
-            print(GeneralParam)
-            print("=== END PARAMETER FILE ===\n")
         #---------------------------------------------------------------#
         
         #Wirte Param str into files
@@ -518,10 +481,13 @@ def generate_files(sample_param_dic, EM_param_dic, file_num):
         fid_1vacancy_param.close()
         fid_2vacancy_param.close()
         #---------------------------------------------------------------#
-        
-    #close batch files
-    file_batch.close()
     
-    # Return the output folder path and success message
-    print(f"Files successfully generated in: {output_folder}")
-    return output_folder
+    # Execute incostem for all main image files
+    execution_results = batch_executor.execute_batch(folders)
+    
+    # Return the batch folder path and execution results
+    return {
+        'batch_folder': folders['batch'],
+        'folders': folders,
+        'execution_results': execution_results
+    }

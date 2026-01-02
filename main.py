@@ -32,7 +32,6 @@ from UIComponents_MainUI.DisplayValues import register_display_values_callback
 ##########################################################################################################################
 from _1_xyz_params_generation import Generation
 from UIComponents_StemGeneration.FileInputPanel import file_input_panel
-from UIComponents_StemGeneration.FileInputCallbacks import register_file_upload_callbacks
 
 
 
@@ -110,7 +109,6 @@ def resunet_page():
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP, "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"], suppress_callback_exceptions=True)
 app.layout = html.Div([
-    dcc.Store(id='current-page', data='xyz-generation'),     # Store for current page
     navbar,
     html.Div(
         [
@@ -480,8 +478,6 @@ def load_default_values(n_clicks):
 
 # Register display values callback
 register_display_values_callback(app)
-# Register file upload callbacks for STEM Generation page
-register_file_upload_callbacks(app)
 
 if __name__ == "__main__":
     app.run(debug=True)
