@@ -18,16 +18,10 @@ def create_batch_folders(base_path, batch_num):
         outputs/
             main/
             labels/
-    
-    Args:
-        base_path: Path to STEM_MOS2 folder
-        batch_num: Batch number
-        
-    Returns:
-        Dictionary with all folder paths
     """
-    batch_folder = os.path.join(base_path, f"batch_{batch_num}")
+    batch_folder = os.path.join(base_path, f"batch_{batch_num}") # This is the batch_X folder
     
+    #1=Define all the required folder, ones specified in the graphical workflow
     folders = {
         'batch': batch_folder,
         'inputs': os.path.join(batch_folder, 'inputs'),
@@ -38,7 +32,7 @@ def create_batch_folders(base_path, batch_num):
         'outputs_labels': os.path.join(batch_folder, 'outputs', 'labels')
     }
     
-    # Create all folders
+    #2=Create all folders
     for folder in folders.values():
         os.makedirs(folder, exist_ok=True)
     
@@ -48,22 +42,17 @@ def create_batch_folders(base_path, batch_num):
 def copy_incostem_files(batch_folder):
     """
     Copies incostem.exe and libfftw3f-3.dll to the batch folder
-    
-    Args:
-        batch_folder: Path to batch_X folder
-        
-    Returns:
-        True if successful, False otherwise
     """
-    # Get the _1_batch_workflow directory (where this script is located)
+    #1-Get the _1_batch_workflow directory (where this script is located)
     workflow_dir = Path(__file__).parent.resolve()
     
     incostem_src = workflow_dir / "incostem.exe"
     dll_src = workflow_dir / "libfftw3f-3.dll"
     
-    incostem_dest = os.path.join(batch_folder, "incostem.exe")
-    dll_dest = os.path.join(batch_folder, "libfftw3f-3.dll")
+    incostem_dest = os.path.join(batch_folder, "incostem.exe") # Destination path for incostem.exe
+    dll_dest = os.path.join(batch_folder, "libfftw3f-3.dll")   # Destination path for DLL
     
+    #2- Try and except for the copy procces 
     try:
         if incostem_src.exists():
             shutil.copy2(str(incostem_src), incostem_dest)
@@ -78,7 +67,7 @@ def copy_incostem_files(batch_folder):
         return True
         
     except Exception as e:
-        print(f"Error copying incostem files: {e}")
+        print(f"Error copying incostem files: {e}") 
         return False
 
 

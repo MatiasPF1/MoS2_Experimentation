@@ -21,7 +21,7 @@ sidebar = html.Div(
                 html.Div(
                     [
                         html.I(className="fas fa-microscope sidebar-item-icon"),
-                        html.Span("XYZ/Parameter File Generation", className="sidebar-item-text")
+                        html.Span("Batch Generation", className="sidebar-item-text")
                     ],
                     id="nav-xyz-generation",
                     className="sidebar-item active-sidebar-item"
@@ -29,7 +29,7 @@ sidebar = html.Div(
                 html.Div(
                     [
                         html.I(className="fas fa-image sidebar-item-icon"),
-                        html.Span("STEM-Generation", className="sidebar-item-text")
+                        html.Span("STEM Visualization", className="sidebar-item-text")
                     ],
                     id="nav-stem-generation",
                     className="sidebar-item"

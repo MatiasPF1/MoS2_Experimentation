@@ -1,9 +1,6 @@
-"""
-Batch Workflow Module
-Handles automated batch folder creation, file generation, and incostem execution
-"""
 
-from .batch_executor import (
+
+from .batch_executor import ( # this makes these functions accessible when importing from the package
     create_batch_folders,
     copy_incostem_files,
     execute_incostem_file,
@@ -11,7 +8,7 @@ from .batch_executor import (
     organize_output_files
 )
 
-__all__ = [
+__all__ = [                  # explicitly define what is available for import
     'create_batch_folders',
     'copy_incostem_files',
     'execute_incostem_file',

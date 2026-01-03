@@ -1,4 +1,4 @@
-''''                                                Imports Of UI Components                                                          '''
+''''                                     Imports Of UI Components                                                          '''
 
 
 ##########################################################################################################################
@@ -109,6 +109,7 @@ def resunet_page():
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP, "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"], suppress_callback_exceptions=True)
 app.layout = html.Div([
+    dcc.Store(id='generation-loading', data=False),  # Track if generation is running
     navbar,
     html.Div(
         [
@@ -264,6 +265,8 @@ def safe_int(value, default=0):
 
 @app.callback(
     Output('generate-btn', 'n_clicks'),
+    Output('generate-btn', 'disabled'),
+    Output('generation-loading', 'data'),
     Input('generate-btn', 'n_clicks'),
     State('batch-size-dropdown', 'value'),
     
@@ -327,8 +330,9 @@ def store_parameters_RunGeneration(n_clicks, batch_size, mat_name, pixel_size, m
     
     # If button not clicked, do nothing
     if not n_clicks:
-        return dash.no_update
+        return dash.no_update, False, False
     
+    # Disable button during generation
     # Helper function converts None/empty to default values
     # Generation.py variables with safe conversions
     Generation.file_name = mat_name if mat_name else 'MoS2'
@@ -365,7 +369,7 @@ def store_parameters_RunGeneration(n_clicks, batch_size, mat_name, pixel_size, m
     
     # Run the generation process
     Generation.run_generation(int(batch_size))
-    return n_clicks
+    return n_clicks, False, False  # Re-enable button after completion
 
 ##########################################################################################################################
 #                               3-  Load Default Values Into Input Fields
