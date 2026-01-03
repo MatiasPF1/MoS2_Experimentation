@@ -46,7 +46,7 @@ y
 12.5 1e-6
 ```
 
-# 2. Generate STEM Images(100% Functional in current version, althought making it work with batch is still in progress)
+# 2. Generate STEM Images(100% Functional in current version)
 
 <img width="300" height="295" alt="image" src="https://github.com/user-attachments/assets/e7da5daf-4f34-4e63-8e27-46b8c53ab148" />
 <img width="300" height="500" alt="image" src="https://github.com/user-attachments/assets/575e1a05-6366-41fd-94c9-565da25f79fc" />
@@ -56,8 +56,13 @@ This step generates STEM `.tif` images by directly invoking **ComputeM** using t
 The resulting images are **equivalent** to those obtained when:
 1. Manually creating the XYZ structure file  
 2. Manually writing the corresponding params file  
-3. Running both files independently through ComputeM  
+3. Running both files independently through ComputeM  or in batches 
 =
+
+# Folder Workflow and Platform Facilitation (For 1 & 2)
+- The platform safely interacts with the operating system to manage and organize output directories automatically, streamlining the large-scale, automated generation of STEM content.
+  <img width="1313" height="677" alt="image" src="https://github.com/user-attachments/assets/1216e092-5d7d-4d3c-b18d-b3e49f731cba" />
+
 
 # 3. Preprocessing(in progress)
 
