@@ -9,7 +9,7 @@ from dash import html
 def file_input_panel():
     """
     Placeholder panel for STEM image visualization
-    Will be implemented in future versions with automatic generation
+    Will be implemented in future versions
     """
     return html.Div(
         [

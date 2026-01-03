@@ -4,8 +4,10 @@ import numpy as np
 from _1_batch_workflow import batch_executor 
 
 
-                #All Credits to Chuqiao Shi & Chia-hao Lee 20190310
-    
+#All Credits to Chuqiao Shi & Chia-hao Lee 20190310, Lot of this work is based on their previous MoS2 dopant STEM simulation code 
+'''
+The original Implementation is same as previous code , but now integrated into the workflow structure.
+'''
 
                                 # XYZ/Parameters Generation
 #Inputs By the User, this is just for initialization
@@ -107,7 +109,6 @@ def generate_files(sample_param_dic, EM_param_dic, file_num):
     filesuffix = '_incostem_'
     
     # Create batch folder structure using batch workflow
-    #---------------------------------------------------------------#
     downloads_folder = os.path.join(os.path.expanduser("~"), "Downloads")
     base_folder = os.path.join(downloads_folder, "STEM_MOS2")
     if not os.path.exists(base_folder):
@@ -124,7 +125,6 @@ def generate_files(sample_param_dic, EM_param_dic, file_num):
     # Copy incostem.exe and DLL to batch folder
     if not batch_executor.copy_incostem_files(folders['batch']):
         print("Warning: Could not copy incostem files. Execution may fail.")
-    #---------------------------------------------------------------#
     
     
    
@@ -176,8 +176,7 @@ def generate_files(sample_param_dic, EM_param_dic, file_num):
     
     for N in range(file_num):
         
-        #Write .xyz file names for the images files and the labels files
-        #---------------------------------------------------------------#
+    #1-Write .xyz file names for the images files and the labels files
         #images files - save to inputs/main/
         filename = xtalnm+filesuffix+str(rep_x)+'_'+str(rep_y)+'_'+str(rep_z)+'_'+str(N)
         fid      = open(os.path.join(inputs_main, filename+'.xyz'), 'w+')              #images files
@@ -195,11 +194,9 @@ def generate_files(sample_param_dic, EM_param_dic, file_num):
         fid_1vacancy            = open(os.path.join(inputs_labels, filename_1vacancy+'.xyz'), 'w+')
         filename_2vacancy       = xtalnm+'_2vacancy'+filesuffix+str(rep_x)+'_'+str(rep_y)+'_'+str(rep_z)+'_'+str(N)
         fid_2vacancy            = open(os.path.join(inputs_labels, filename_2vacancy+'.xyz'), 'w+')
-        #---------------------------------------------------------------#
         
         
-        #Write the header into each xyz file
-        #---------------------------------------------------------------#
+    #2-Write the header into each xyz file
         DateString              = time.strftime("%Y_%m_%d_%H_%M_%S", time.localtime())
         xyzheader               =xtalnm+filesuffix+str(rep_x)+'_'+str(rep_y)+'_'+str(rep_z)+'_Created_at_'+DateString+'\n'
         xyzheader_metal_Doped   =xtalnm+'_metal_Doped'+filesuffix+str(rep_x)+'_'+str(rep_y)+'_'+str(rep_z)+'_Created_at_'+DateString+'\n'
@@ -216,10 +213,8 @@ def generate_files(sample_param_dic, EM_param_dic, file_num):
         fid_1Doped.write(xyzheader_1Doped)
         fid_1vacancy.write(xyzheader_1vacancy)
         fid_2vacancy.write(xyzheader_2vacancy)
-        #---------------------------------------------------------------#
         
-        # write xyz coordinates
-        #---------------------------------------------------------------#
+        #2-Write the supercell dimensions into each xyz file
         fid.write('{:.4f} {:.4f} {:.4f} \n'.format(supercell_a,supercell_b,supercell_c))
         fid_metal_Doped.write('{:.4f} {:.4f} {:.4f} \n'.format(supercell_a,supercell_b,supercell_c))
         fid_metal_vacancy.write('{:.4f} {:.4f} {:.4f} \n'.format(supercell_a,supercell_b,supercell_c))

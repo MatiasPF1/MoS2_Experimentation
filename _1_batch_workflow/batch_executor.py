@@ -73,15 +73,11 @@ def copy_incostem_files(batch_folder):
 
 def execute_incostem_file(batch_folder, param_file_path):
     """
+    Case 1: 
     Executes incostem.exe for a single param file
-    
-    Args:
-        batch_folder: Path to batch_X folder (where incostem.exe is located)
-        param_file_path: Absolute path to the .param file
-        
-    Returns:
-        Dictionary with success status and message
     """
+    
+    #1-Get the path to incostem.exe and  handle missing file
     incostem_path = os.path.join(batch_folder, "incostem.exe")
     
     if not os.path.exists(incostem_path):
@@ -90,13 +86,15 @@ def execute_incostem_file(batch_folder, param_file_path):
             "message": f"incostem.exe not found in {batch_folder}",
             "file": param_file_path
         }
-    
+        
+        
+    #2- Execute incostem with the param file content piped in
     try:
         # Read the param file content
         with open(param_file_path, 'rb') as f:
             params_content = f.read()
         
-        # Execute incostem (mimics: Get-Content file.param | .\incostem.exe)
+        # Execute incostem (mimics: Get-Content file.param | .\incostem.exe), that was what worked in powershell
         result = subprocess.run(
             [incostem_path],
             input=params_content,
@@ -106,6 +104,7 @@ def execute_incostem_file(batch_folder, param_file_path):
             shell=False
         )
         
+    #3- Handle the result, returns a dictionary with success status and message
         if result.returncode == 0:
             return {
                 "success": True,
@@ -146,19 +145,14 @@ def execute_incostem_file(batch_folder, param_file_path):
 
 def execute_batch(folders, progress_callback=None):
     """
+    Case 2:
     Executes incostem for all main image param files in the batch
-    
-    Args:
-        folders: Dictionary of folder paths from create_batch_folders
-        progress_callback: Optional callback function(current, total, filename)
-        
-    Returns:
-        Dictionary with execution results
     """
-    batch_folder = folders['batch']
-    inputs_main = folders['inputs_main']
     
-    # Find all .param files in inputs/main/
+    batch_folder = folders['batch'] # This is the batch_X folder
+    inputs_main = folders['inputs_main'] # This is the inputs/main/ folder
+    
+    #1-Find all .param files in inputs/main/ and handle no files found
     param_files = [f for f in os.listdir(inputs_main) if f.endswith('.param')]
     
     if not param_files:
@@ -169,9 +163,11 @@ def execute_batch(folders, progress_callback=None):
         }
     
     results = []
-    total = len(param_files)
+    total = len(param_files) # Total number of param files to process 
     
-    # Verify incostem.exe exists before execution
+    
+    
+    #2-Verify incostem.exe exists before execution
     incostem_exe = os.path.join(batch_folder, 'incostem.exe')
     if not os.path.exists(incostem_exe):
         return {
@@ -179,18 +175,18 @@ def execute_batch(folders, progress_callback=None):
             "message": "incostem.exe not found in batch folder",
             "results": []
         }
-    
-    for idx, param_file in enumerate(param_files, 1):
-        param_path = os.path.join(inputs_main, param_file)
         
+        
+    #3-Execute incostem for each param file, with optional progress callback
+    for idx, param_file in enumerate(param_files, 1): # We will execute the file one by one with the function created before 
+        param_path = os.path.join(inputs_main, param_file)
         if progress_callback:
             progress_callback(idx, total, param_file)
-        
-        result = execute_incostem_file(batch_folder, param_path)
+        result = execute_incostem_file(batch_folder, param_path) 
         results.append(result)
-    
     successful = sum(1 for r in results if r['success'])
     
+    #4-Return summary of execution results
     return {
         "success": successful > 0,
         "message": f"Completed {successful}/{total} images",
@@ -213,9 +209,10 @@ def organize_output_files(folders):
     outputs_main = folders['outputs_main']
     outputs_labels = folders['outputs_labels']
     
-    # Find all .tif files in batch folder
+    #1-Find all .tif files in batch folder
     tif_files = [f for f in os.listdir(batch_folder) if f.endswith('.tif')]
     
+    #2-Move files to appropriate output folders
     for tif_file in tif_files:
         src = os.path.join(batch_folder, tif_file)
         
@@ -223,12 +220,15 @@ def organize_output_files(folders):
         is_label = any(keyword in tif_file for keyword in 
                       ['metal_Doped', 'metal_vacancy', '1Doped', '2Doped', '1vacancy', '2vacancy'])
         
+        
+        #3-Determine destination folder
         dest_folder = outputs_labels if is_label else outputs_main
         dest = os.path.join(dest_folder, tif_file)
         
+        #4-Move the file and handle exceptions
         try:
             shutil.move(src, dest)
-        except Exception as e:
+        except Exception as e: 
             print(f"Warning: Could not move {tif_file}: {e}")
     
-    print(f"✓ Organized output TIF files into outputs/main/ and outputs/labels/")
+    print(f"Organized output TIF files into outputs/main/ and outputs/labels/")
