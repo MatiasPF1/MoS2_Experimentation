@@ -144,28 +144,8 @@ The two-model setup allows specialization: one network focuses on **vacancy-type
 
 
 # Workflow 
-## Folder Workflow
 
-This project follows a **structured, automated folder workflow** to ensure reproducibility and scalability across different materials and simulation batches.
-
-
-### 1. Main Folder Creation (`STEM_MOS2`)
-
-- **Case 1:** If the `STEM_MOS2` folder does **not exist**, it is automatically created inside the system’s `Downloads/` directory.
-- **Case 2:** If the `STEM_MOS2` folder **already exists**, the pipeline continues without overwriting existing data.
-
-This folder acts as the **root directory** for all simulations, preprocessing steps, and model outputs.
-
-
-### 2. Batch-Level Organization
-
-Inside `STEM_MOS2`, the workflow creates **batch-specific subfolders**:
-
-<img width="1327" height="682" alt="FolderWorkflow" src="https://github.com/user-attachments/assets/4d24e2ef-60a2-474e-b05c-21c34b02d876" />
-
-
-
-## Main Workflow Overview(needs update)
+## Overview(needs update)
 
 The overall pipeline is implemented as a **modular, sequential workflow**, where each stage is handled by a dedicated Python module. Although not shown here, the internal execution follows a **graph-style flow** that mirrors the folder structure and data dependencies across the project.
 
