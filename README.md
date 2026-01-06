@@ -59,7 +59,7 @@ The resulting images are **equivalent** to those obtained when:
 3. Running both files independently through ComputeM  or in batches 
 =
 
-# Folder Workflow and Platform Facilitation (For 1 & 2)
+# Folder Workflow and Platform Facilitation (For 1 & 2, Currently Working in Integrating 3)
 - The platform safely interacts with the operating system to manage and organize output directories automatically, streamlining the large-scale, automated generation of STEM content.
   <img width="1313" height="677" alt="image" src="https://github.com/user-attachments/assets/1216e092-5d7d-4d3c-b18d-b3e49f731cba" />
 
