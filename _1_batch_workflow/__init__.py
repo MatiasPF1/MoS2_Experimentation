@@ -5,6 +5,7 @@ from .batch_executor import ( # this makes these functions accessible when impor
     copy_incostem_files,
     execute_incostem_file,
     execute_batch,
+    execute_labels,  
     organize_output_files
 )
 
@@ -13,5 +14,6 @@ __all__ = [                  # explicitly define what is available for import
     'copy_incostem_files',
     'execute_incostem_file',
     'execute_batch',
-    'organize_output_files'
+    'execute_labels',
+    'organize_output_files'  
 ]

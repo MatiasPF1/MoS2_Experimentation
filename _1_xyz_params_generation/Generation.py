@@ -123,8 +123,7 @@ def generate_files(sample_param_dic, EM_param_dic, file_num):
     folders = batch_executor.create_batch_folders(base_folder, batch_num)
     
     # Copy incostem.exe and DLL to batch folder
-    if not batch_executor.copy_incostem_files(folders['batch']):
-        print("Warning: Could not copy incostem files. Execution may fail.")
+    batch_executor.copy_incostem_files(folders['batch'])
     
     
    
@@ -241,7 +240,6 @@ def generate_files(sample_param_dic, EM_param_dic, file_num):
                     
                     #---------------------------------------------------------------#
                     prob_metal1 = np.random.rand() 
-                    
                     metal_vacancy1 = False
                     if prob_metal1<metal_doped_prob:
                         final_atom1 = atom1 + i*np.array([0,a,0,0,0,0])+j*np.array([0,0,b,0,0,0])+k*np.array([0,0,0,c,0,0]) + np.array([metal_dopant_different,0,0,0,0,0])
@@ -259,6 +257,7 @@ def generate_files(sample_param_dic, EM_param_dic, file_num):
                         final_atom4 = atom4 + i*np.array([0,a,0,0,0,0])+j*np.array([0,0,b,0,0,0])+k*np.array([0,0,0,c,0,0]) + np.array([metal_dopant_different,0,0,0,0,0])
                         fid_metal_Doped.write('{:.0f} {:.6f} {:.6f} {:.6f} {:.0f} {:.2f} \n'.format(final_atom4[0],final_atom4[1],final_atom4[2],final_atom4[3],final_atom4[4],final_atom4[5]))
                     elif metal_doped_prob<prob_metal2<metal_doped_prob+metal_vacancy_prob:
+                        final_atom4 = atom4 + i*np.array([0,a,0,0,0,0])+j*np.array([0,0,b,0,0,0])+k*np.array([0,0,0,c,0,0])
                         fid_metal_vacancy.write('{:.0f} {:.6f} {:.6f} {:.6f} {:.0f} {:.2f} \n'.format(final_atom4[0],final_atom4[1],final_atom4[2],final_atom4[3],final_atom4[4],final_atom4[5]))
                         metal_vacancy2 = True
                     else:
@@ -409,7 +408,8 @@ def generate_files(sample_param_dic, EM_param_dic, file_num):
         fid_1vacancy_param           = open(os.path.join(inputs_labels, filename_1vacancy+'.param'),'w+')
         fid_2vacancy_param           = open(os.path.join(inputs_labels, filename_2vacancy+'.param'),'w+')
         #---------------------------------------------------------------#
-        #Write the xyz filename with relative path from batch folder
+        
+        #Write the xyz filename + relative path from batch folder
         #---------------------------------------------------------------#
         fid_param.write('inputs/main/'+filename+'.xyz \n1 1 1\n')
         fid_metal_Doped_param.write('inputs/labels/'+filename_metal_Doped+'.xyz \n1 1 1\n')
@@ -450,7 +450,7 @@ def generate_files(sample_param_dic, EM_param_dic, file_num):
         probe_current       = np.random.normal(probe_current_param[0],probe_current_param[1])
         noise_str           = '\n'+str(probe_current)+' '+str(dwell_time)
         
-        # Correct format: after defocus_spread, answer y/n to noise question, then probe current/dwell time
+        # This section is wre-written by matias with help and analysis of Claude, before, files were not being written correctly  because the last portion made incostem crash
         GeneralParam        = image_size_str+STEM_Param_str+ADF_str+High_order_str+source_size_str+Defocus_str+'\ny'+noise_str
         GeneralParam_defect = image_size_str+STEM_Param_str+ADF_str+High_order_str+source_size_str+Defocus_str+'\nn'
         #---------------------------------------------------------------#
@@ -477,12 +477,28 @@ def generate_files(sample_param_dic, EM_param_dic, file_num):
         fid_2vacancy_param.close()
         #---------------------------------------------------------------#
     
+    
+
+
+
+  
+  ################################  New Code to Execute and Organize ####################
     # Execute incostem for all main image files
     execution_results = batch_executor.execute_batch(folders)
+
+    # Execute incostem for all label files
+    label_results = batch_executor.execute_labels(folders)
+
+    # Organize ALL output files (main + labels)
+    batch_executor.organize_output_files(folders)  
+    
+    
+
     
     # Return the batch folder path and execution results
     return {
         'batch_folder': folders['batch'],
         'folders': folders,
-        'execution_results': execution_results
+        'execution_results': execution_results,
+        'label_results': label_results
     }
