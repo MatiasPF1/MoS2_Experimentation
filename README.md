@@ -152,13 +152,13 @@ The two-model setup allows specialization: one network focuses on **vacancy-type
    *ComputeM: Multislice STEM Simulation Toolbox.*  
    Page: https://sourceforge.net/projects/computem/ 
    
-3. **Deep Learning of Vacancy Defects and Polymorphs in MoS₂**  
+2. **Deep Learning of Vacancy Defects and Polymorphs in MoS₂**  
    Ziatdinov, M., Dyck, O., Maksov, A., Li, X., & Kalinin, S. V.  
    *Deep learning of atomically resolved scanning transmission electron microscopy images: identification of vacancy defects and polymorphs of MoS₂.*  
    **npj Computational Materials**, 3, 31 (2017).
    
 
-5. **Deep Learning Enabled Measurements of Single-Atom Defects**  
+3. **Deep Learning Enabled Measurements of Single-Atom Defects**  
    Lee, C.-H., Shi, C., Luo, D., Khan, A., Janicek, B. E., Kang, S., Zhu, W., Clark, B. K., & Huang, P. Y.  
    *Deep Learning Enabled Measurements of Single-Atom Defects in 2D Transition Metal Dichalcogenides with Sub-Picometer Precision.*  
    **Microscopy and Microanalysis**, 25(1), 172–181 (2019).  
