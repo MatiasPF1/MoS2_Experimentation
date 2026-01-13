@@ -1,5 +1,10 @@
 """
-Handles the complete workflow: folder creation, file generation, and incostem execution
+Handles the complete workflow: folder creation, file generation, and incostem execution in params/xyz files
+for
+-->
+1-Stem Images
+2-Label Maps 
+3-To Do: For pre_Proccesing 
 """
 import os
 import subprocess
@@ -53,7 +58,7 @@ def copy_incostem_files(batch_folder):
     """
     Copies incostem.exe and libfftw3f-3.dll to the batch folder
     """
-    #1-Get the _1_batch_workflow directory (where this script is located)
+    #1-Get the batch_workflow directory (where this script is located)
     workflow_dir = Path(__file__).parent.resolve()
     
     #2- Define source and destination paths of the files to copy 
@@ -64,22 +69,23 @@ def copy_incostem_files(batch_folder):
     incostem_dest = os.path.join(batch_folder, "incostem.exe") # Destination path for incostem.exe
     dll_dest = os.path.join(batch_folder, "libfftw3f-3.dll")   # Destination path for DLL
     
-    #4- Try and except for the copy process --> Work Done 
+    #4- Try and except for the copy process(Exception for possible later errors in the future)
     try:
-        if incostem_src.exists():
-            shutil.copy2(str(incostem_src), incostem_dest)
-        else:
-            return False
-            
-        if dll_src.exists():
-            shutil.copy2(str(dll_src), dll_dest)
-        else:
-            return False
-        
+        if not incostem_src.exists():
+            raise FileNotFoundError(f"incostem.exe not found at {incostem_src}")
+    
+        if not dll_src.exists():
+            raise FileNotFoundError(f"libfftw3f-3.dll not found at {dll_src}")
+        shutil.copy2(str(incostem_src), incostem_dest)
+        shutil.copy2(str(dll_src), dll_dest)
         return True
-        
-    except Exception:
+    
+    except Exception as e:
+        print(f"Failed to copy files: {e}")
         return False
+
+
+
 
 
 ############## 3- Execute incostem for a single param File ###########################
@@ -132,26 +138,29 @@ def execute_incostem_file(batch_folder, param_file_path):
                 "file": os.path.basename(param_file_path)
             }
             
+    # - This except handles if the procces time exceeds the timeout limit 
     except subprocess.TimeoutExpired:
         return {
             "success": False,
             "message": "Execution timeout (exceeded 5 minutes)",
             "file": os.path.basename(param_file_path)
         }
+    # - This except handles if the param file is not found
     except PermissionError as e:
         return {
             "success": False,
             "message": f"Permission error: {str(e)}",
             "file": os.path.basename(param_file_path)
         }
+    # - This except handles any other general exception
     except Exception as e:
         return {
             "success": False,
             "message": f"Error: {str(e)}",
             "file": os.path.basename(param_file_path)
         }
+    #- Finally block to ensure cleanup
     finally:
-        # Ensure cleanup
         import gc
         gc.collect()
 
@@ -169,8 +178,13 @@ def _execute_param_files(batch_folder, input_folder, file_type="images"):
     Returns:
         dict: Execution results with success status and statistics
     """
-    #1-Find all .param files and handle no files found
-    param_files = [f for f in os.listdir(input_folder) if f.endswith('.param')]
+    
+    
+    #1-Find all .param files + handle no files found
+    param_files = []
+    for f in os.listdir(input_folder):
+        if f.endswith('.param'):
+            param_files.append(f)
     
     if not param_files:
         return {
@@ -191,12 +205,12 @@ def _execute_param_files(batch_folder, input_folder, file_type="images"):
     #3-Execute incostem for each param file
     results = []
     for param_file in param_files:
-        param_path = os.path.join(input_folder, param_file)
-        result = execute_incostem_file(batch_folder, param_path)
-        results.append(result)
+        param_path = os.path.join(input_folder, param_file) # Full path to param file
+        result = execute_incostem_file(batch_folder, param_path) # Execute incostem
+        results.append(result) # Collect result
     
-    successful = sum(1 for r in results if r['success'])
-    total = len(param_files)
+    successful = sum(1 for r in results if r['success']) # Count successful executions
+    total = len(param_files) # Total number of param files
     
     #4-Return summary of execution results
     return {

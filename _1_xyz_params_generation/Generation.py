@@ -1,10 +1,10 @@
 import os 
 import time
 import numpy as np
-from _1_batch_workflow import batch_executor 
+from batch_workflow import batch_executor 
 
 
-#All Credits to Chuqiao Shi & Chia-hao Lee 20190310, Lot of this work is based on their previous MoS2 dopant STEM simulation code 
+#All Credits to Chuqiao Shi & Chia-hao Lee 20190310, Almost most  of this work is based on their previous MoS2 dopant STEM simulation code 
 '''
 The original Implementation is same as previous code , but now integrated into the workflow structure.
 '''
@@ -375,7 +375,7 @@ def generate_files(sample_param_dic, EM_param_dic, file_num):
                         pass
                     #---------------------------------------------------------------#
         
-        #-1 as End of the file and close all xyz files
+        # As End of the file and close all xyz files
         #---------------------------------------------------------------#
         fid.write('-1')
         fid_metal_Doped.write('-1')
@@ -386,7 +386,7 @@ def generate_files(sample_param_dic, EM_param_dic, file_num):
         fid_2vacancy.write('-1')
         #---------------------------------------------------------------#
         
-        # close the files
+        # Close the files
         #---------------------------------------------------------------#
         fid.close()
         fid_metal_Doped.close()
@@ -399,6 +399,7 @@ def generate_files(sample_param_dic, EM_param_dic, file_num):
         
         
         #Generate parameter files
+        # Added by Matias: Join to inputs/main and inputs/labels folders(where they have to be saved)
         #---------------------------------------------------------------#
         fid_param                    = open(os.path.join(inputs_main, filename+'.param'),'w+')
         fid_metal_Doped_param        = open(os.path.join(inputs_labels, filename_metal_Doped+'.param'),'w+')
@@ -409,7 +410,8 @@ def generate_files(sample_param_dic, EM_param_dic, file_num):
         fid_2vacancy_param           = open(os.path.join(inputs_labels, filename_2vacancy+'.param'),'w+')
         #---------------------------------------------------------------#
         
-        #Write the xyz filename + relative path from batch folder
+        #Generate the xyz filename 
+        #Added by Matias: Join to inputs/main and inputs/labels folders(where they have to be saved)
         #---------------------------------------------------------------#
         fid_param.write('inputs/main/'+filename+'.xyz \n1 1 1\n')
         fid_metal_Doped_param.write('inputs/labels/'+filename_metal_Doped+'.xyz \n1 1 1\n')
@@ -421,6 +423,7 @@ def generate_files(sample_param_dic, EM_param_dic, file_num):
         #---------------------------------------------------------------#
         
         #Save the image as .tif files with relative path to outputs folder
+        #Added by Matias: Join to outputs/main and outputs/labels folders(where they have to be saved)
         #---------------------------------------------------------------#
         fid_param.write('outputs/main/Image'+filename+'.tif')
         fid_metal_Doped_param.write('outputs/labels/metal_Doped_'+filename+'.tif')
@@ -450,7 +453,7 @@ def generate_files(sample_param_dic, EM_param_dic, file_num):
         probe_current       = np.random.normal(probe_current_param[0],probe_current_param[1])
         noise_str           = '\n'+str(probe_current)+' '+str(dwell_time)
         
-        # This section is wre-written by matias with help and analysis of Claude, before, files were not being written correctly  because the last portion made incostem crash
+        # This section is wre-written by matias with help and analysis of Claude, before after trying again and again with incostem, files were not being written correctly, the last portion made incostem crash
         GeneralParam        = image_size_str+STEM_Param_str+ADF_str+High_order_str+source_size_str+Defocus_str+'\ny'+noise_str
         GeneralParam_defect = image_size_str+STEM_Param_str+ADF_str+High_order_str+source_size_str+Defocus_str+'\nn'
         #---------------------------------------------------------------#
@@ -482,7 +485,7 @@ def generate_files(sample_param_dic, EM_param_dic, file_num):
 
 
   
-  ################################  New Code to Execute and Organize ####################
+    ################################  New Code to Execute and Organize ####################
     # Execute incostem for all main image files
     execution_results = batch_executor.execute_batch(folders)
 
