@@ -48,8 +48,9 @@ y
 
 # 2. Generate STEM Images(100% Functional in current version)
 
-<img width="300" height="295" alt="image" src="https://github.com/user-attachments/assets/e7da5daf-4f34-4e63-8e27-46b8c53ab148" />
-<img width="300" height="500" alt="image" src="https://github.com/user-attachments/assets/575e1a05-6366-41fd-94c9-565da25f79fc" />
+<img width="300" height="500" alt="image" src="https://github.com/user-attachments/assets/ede06720-e61b-41aa-848c-28bc0b3c275c" />
+<img width="300" height="501" alt="image" src="https://github.com/user-attachments/assets/e2583153-0428-4d3d-a34d-72ab2d8d032c" />
+
 
 This step generates STEM `.tif` images by directly invoking **ComputeM** using the automatically generated XYZ and params files.
 
@@ -57,7 +58,7 @@ The resulting images are **equivalent** to those obtained when:
 1. Manually creating the XYZ structure file  
 2. Manually writing the corresponding params file  
 3. Running both files independently through ComputeM  or in batches 
-=
+4. Getting the output STEM `.tif` with its correspondent Truth Labels `.tif`
 
 # Folder Workflow and Platform Facilitation (For 1 & 2, Currently Working in Integrating 3)
 - The platform safely interacts with the operating system to manage and organize output directories automatically, streamlining the large-scale, automated generation of STEM content.
@@ -124,7 +125,7 @@ Each model operates on the preprocessed STEM images generated in the previous st
 - Residual blocks improve gradient flow and stability for deep architectures
 - Designed for high-resolution, low-SNR STEM data
 
-<img width="512" height="438" alt="image" src="https://github.com/user-attachments/assets/76db8361-7cd3-4222-9583-63006ef40069" />
+<img width="502" height="432" alt="image" src="https://github.com/user-attachments/assets/7d4237f7-b840-4414-93cb-07f912ff0cf7" />
 
 
 ---
@@ -134,26 +135,13 @@ Each model operates on the preprocessed STEM images generated in the previous st
 - Separate output channels for different defect or polymorph classes
 - Preserves exact spatial correspondence with the input STEM image
 
-<img width="728" height="415" alt="image" src="https://github.com/user-attachments/assets/f83bf892-b013-4f8f-9779-b3eef3b1ceb1" />
+<img width="508" height="342" alt="image" src="https://github.com/user-attachments/assets/5abf176f-b303-4809-adab-7e3f9a44dfc9" />
 
 
 The two-model setup allows specialization: one network focuses on **vacancy-type defects**, while the other targets **structural polymorph identification**, improving robustness and interpretability.
 
 ---
 
-
-
-# Workflow 
-
-## Overview(needs update)
-
-The overall pipeline is implemented as a **modular, sequential workflow**, where each stage is handled by a dedicated Python module. Although not shown here, the internal execution follows a **graph-style flow** that mirrors the folder structure and data dependencies across the project.
-
-At a high level, the workflow proceeds as follows:
-
-
-
-<img width="1000" height="578" alt="image" src="https://github.com/user-attachments/assets/9cb96b07-5fe9-498b-8f1f-725d9f9fd5dc" />
 
 
 
